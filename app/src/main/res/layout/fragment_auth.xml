@@ -30,7 +30,8 @@
             app:layout_constraintTop_toBottomOf="@+id/logo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            style="@style/EditText">
+            style="@style/EditText"
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email"
@@ -54,9 +55,9 @@
             app:layout_constraintTop_toBottomOf="@+id/emailInputLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:endIconMode="custom"
+            app:endIconDrawable="@drawable/eye_open"
             app:errorEnabled="true"
-            app:errorIconDrawable="@drawable/baseline_error_24"
-            app:endIconMode="password_toggle"
             style="@style/EditText">
 
             <com.google.android.material.textfield.TextInputEditText
