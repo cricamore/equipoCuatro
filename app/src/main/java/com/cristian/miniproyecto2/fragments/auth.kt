@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
+import androidx.navigation.fragment.findNavController
 import com.cristian.miniproyecto2.R
 import com.cristian.miniproyecto2.databinding.FragmentAuthBinding
 import com.google.android.material.textfield.TextInputLayout
@@ -39,5 +40,14 @@ class auth : Fragment() {
 
         return binding.root
     }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        controllers()
+    }
+    fun controllers(){
+        binding.loginButton.setOnClickListener{
+            findNavController().navigate(R.id.action_to_fragmentInventario)
+        }
 
+    }
 }
