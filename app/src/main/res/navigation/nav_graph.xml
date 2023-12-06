@@ -3,25 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/auth">
-
-    <fragment
-        android:id="@+id/auth"
-        android:name="com.cristian.miniproyecto2.fragments.auth"
-        android:label="Auth"
-        tools:layout="@layout/fragment_auth" />
-    <action
-        android:id="@+id/action_to_fragmentInventario"
-        app:destination="@id/fragmentInventario" />
+    app:startDestination="@id/fragmentInventario">
 
     <fragment
         android:id="@+id/fragmentInventario"
-        android:name="com.cristian.miniproyecto2.fragments.inventario"
+        android:name="com.cristian.miniproyecto2.view.fragments.inventario"
         android:label="Principal"
         tools:layout="@layout/fragment_inventario"
         />
-    <action
-        android:id="@+id/action_to_auth"
-        app:destination="@id/auth" />
+
 
 </navigation>

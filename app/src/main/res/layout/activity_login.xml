@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/black"
-        tools:context=".fragments.auth">
+        tools:context=".view.fragments.auth">
 
         <ImageView
             android:id="@+id/logo"

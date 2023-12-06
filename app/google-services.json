@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "101740395354",
+    "project_id": "loginmp2-d19f6",
+    "storage_bucket": "loginmp2-d19f6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:101740395354:android:8d2c4bc312f4a5831a5163",
+        "android_client_info": {
+          "package_name": "com.cristian.miniproyecto2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoKLtTXou0Su0lV7wPRVpVQ3A76BmCVa8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

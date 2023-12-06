@@ -1,4 +1,4 @@
-package com.cristian.miniproyecto2.fragments
+package com.cristian.miniproyecto2.view.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -22,12 +22,6 @@ class inventario : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        controllers()
-    }
-    fun controllers(){
-        binding.btnLogout.setOnClickListener{
-            findNavController().navigate(R.id.action_to_auth)
-        }
     }
 
 

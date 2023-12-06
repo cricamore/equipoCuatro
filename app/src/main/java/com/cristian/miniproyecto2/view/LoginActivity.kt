@@ -1,69 +1,50 @@
-package com.cristian.miniproyecto2.fragments
+package com.cristian.miniproyecto2.view
 
 import android.graphics.Typeface
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.InputType
 import android.text.method.PasswordTransformationMethod
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
-import androidx.navigation.fragment.findNavController
+import androidx.databinding.DataBindingUtil
 import com.cristian.miniproyecto2.R
-import com.cristian.miniproyecto2.databinding.FragmentAuthBinding
+import com.cristian.miniproyecto2.databinding.ActivityLoginBinding
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 
-class auth : Fragment() {
-    private lateinit var binding: FragmentAuthBinding
+class LoginActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityLoginBinding
     private lateinit var emailEditText: TextInputEditText
     private lateinit var passwordEditText: TextInputEditText
     private lateinit var loginButton: Button
     private lateinit var registrarText: TextView
 
-
     private var isPasswordVisible = false
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentAuthBinding.inflate(inflater)
-        binding.lifecycleOwner = this
-
-        binding.password.doOnTextChanged{ text,start,before,count ->
-            if(text?.length?: 0 < 6){
-                binding.passwordInputLayout.error = "Mínimo 6 dígitos"
-            }
-            else{
+        binding.password.doOnTextChanged { text, _, _, _ ->
+            if (text?.length ?: 0 > 0) {
+                validatePasswordLength(text)
+            } else {
                 binding.passwordInputLayout.error = null
             }
-
-        }
-
-        binding.passwordInputLayout.setEndIconOnClickListener {
-            togglePasswordVisibility()
         }
 
         enableButton()
+        togglePasswordVisibility()
 
-        return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        controllers()
-    }
-    private fun controllers() {
-        binding.loginButton.setOnClickListener {
-            findNavController().navigate(R.id.action_to_fragmentInventario)
+    private fun validatePasswordLength(text: CharSequence?) {
+        if (text?.length ?: 0 < 6) {
+            binding.passwordInputLayout.error = "Mínimo 6 dígitos"
+        } else {
+            binding.passwordInputLayout.error = null
         }
     }
-
 
     private fun enableButton(){
         emailEditText = binding.email
@@ -74,8 +55,8 @@ class auth : Fragment() {
         loginButton.isEnabled = false
         registrarText.isEnabled = false
 
-        registrarText.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray))
-        loginButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray))
+        registrarText.setTextColor(ContextCompat.getColor(this, R.color.gray))
+        loginButton.setTextColor(ContextCompat.getColor(this, R.color.gray))
 
         emailEditText.doOnTextChanged { email, _, _, _ ->
             updateButtonState(email, passwordEditText.text)
@@ -92,14 +73,14 @@ class auth : Fragment() {
         loginButton.isEnabled = isFieldsNotEmpty
 
         if (isFieldsNotEmpty) {
-            loginButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            loginButton.setTextColor(ContextCompat.getColor(this, R.color.white))
             loginButton.setTypeface(null, Typeface.BOLD)
-            registrarText.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            registrarText.setTextColor(ContextCompat.getColor(this, R.color.white))
             registrarText.setTypeface(null, Typeface.BOLD)
         } else {
-            loginButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray))
+            loginButton.setTextColor(ContextCompat.getColor(this, R.color.gray))
             loginButton.setTypeface(null, Typeface.NORMAL)
-            registrarText.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray))
+            registrarText.setTextColor(ContextCompat.getColor(this, R.color.gray))
             registrarText.setTypeface(null, Typeface.NORMAL)
         }
     }
@@ -110,12 +91,11 @@ class auth : Fragment() {
         if (isPasswordVisible) {
             binding.password.transformationMethod = null
             binding.passwordInputLayout.endIconDrawable =
-                ContextCompat.getDrawable(requireContext(), R.drawable.eye_close)
+                ContextCompat.getDrawable(this, R.drawable.eye_close)
         } else {
             binding.password.transformationMethod = PasswordTransformationMethod.getInstance()
             binding.passwordInputLayout.endIconDrawable =
-                ContextCompat.getDrawable(requireContext(), R.drawable.eye_open)
+                ContextCompat.getDrawable(this, R.drawable.eye_open)
         }
     }
-
 }
