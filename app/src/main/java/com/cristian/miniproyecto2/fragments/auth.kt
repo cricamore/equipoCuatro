@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
+import androidx.navigation.fragment.findNavController
 import com.cristian.miniproyecto2.R
 import com.cristian.miniproyecto2.databinding.FragmentAuthBinding
 import com.google.android.material.textfield.TextInputEditText
@@ -52,6 +53,17 @@ class auth : Fragment() {
 
         return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        controllers()
+    }
+    private fun controllers() {
+        binding.loginButton.setOnClickListener {
+            findNavController().navigate(R.id.action_to_fragmentInventario)
+        }
+    }
+
 
     private fun enableButton(){
         emailEditText = binding.email
@@ -105,8 +117,5 @@ class auth : Fragment() {
                 ContextCompat.getDrawable(requireContext(), R.drawable.eye_open)
         }
     }
-
-
-
 
 }
