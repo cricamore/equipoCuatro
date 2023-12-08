@@ -1,4 +1,4 @@
-package com.cristian.miniproyecto2
+package com.cristian.miniproyecto2.view
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
@@ -7,8 +7,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
-import androidx.databinding.DataBindingUtil
-import com.cristian.miniproyecto2.databinding.WidgetAppInventoryBinding
+import com.cristian.miniproyecto2.R
 
 /**
  * Implementation of App Widget functionality.
