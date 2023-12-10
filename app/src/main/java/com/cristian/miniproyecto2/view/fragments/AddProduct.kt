@@ -74,13 +74,13 @@ class AddProduct : Fragment() {
     }
 
     private fun guardarProducto() {
-        val codigo = binding.codigoEditText.text.toString().trim()
+        val codigo = binding.codigoEditText.text.toString().trim().toLong()
         val nombre = binding.nombreEditText.text.toString().trim()
         val precio = binding.precioEditText.text.toString().trim().toLong()
         val cantidad = binding.cantidadEditText.text.toString().trim().toLong()
 
         val nuevoArticulo = Articulo(
-            id = System.currentTimeMillis(), // Use a unique identifier (e.g., timestamp) as ID
+            id = codigo,
             name = nombre,
             price = precio,
             quantity = cantidad
