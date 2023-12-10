@@ -72,4 +72,7 @@ dependencies {
     implementation ("androidx.activity:activity-ktx:1.8.0")
     implementation ("androidx.fragment:fragment-ktx:1.6.2")
 
+    //Cardview
+    implementation ("androidx.cardview:cardview:1.0.0")
+
 }
