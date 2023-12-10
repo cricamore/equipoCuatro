@@ -3,10 +3,12 @@ package com.cristian.miniproyecto2.viewmodel
 import androidx.lifecycle.ViewModel
 import com.cristian.miniproyecto2.model.Articulo
 import com.google.firebase.firestore.FirebaseFirestore
-class InventarioViewModel: ViewModel() {
+import kotlin.math.log
+
+class InventarioViewModel : ViewModel() {
     private val db = FirebaseFirestore.getInstance()
 
-     fun guardarArticulo(articulo: Articulo){
+    fun guardarArticulo(articulo: Articulo) {
         db.collection("articulo").document(articulo.id.toString()).set(
             hashMapOf(
                 "id" to articulo.id,
@@ -17,8 +19,10 @@ class InventarioViewModel: ViewModel() {
         )
     }
 
+
     fun listarArticulos(): MutableList<Articulo> {
         var articulos = mutableListOf<Articulo>()
+        var suma = 0L
         db.collection("articulo").get().addOnSuccessListener {
             for (document in it.documents) {
                 val articulo = Articulo( // crea un objeto Articulo con los datos del documento
@@ -28,6 +32,7 @@ class InventarioViewModel: ViewModel() {
                     quantity = document.get("quantity") as Long
                 )
                 articulos.add(articulo) // añade el objeto Articulo a la lista articulos
+                suma += articulo.price * articulo.quantity
             }
         }
         return articulos
