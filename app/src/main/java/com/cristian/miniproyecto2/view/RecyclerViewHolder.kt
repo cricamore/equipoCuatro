@@ -9,5 +9,7 @@ class RecyclerViewHolder(binding: ItemInventarioBinding): RecyclerView.ViewHolde
 
     fun setItemProducto(articulo: Articulo){
         bindingItem.nombre.text = articulo.name
+        bindingItem.price.text = articulo.price.toString()
+        bindingItem.id.text = articulo.id.toString()
     }
 }
