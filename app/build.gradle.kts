@@ -54,6 +54,7 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.5")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.5")
     implementation("androidx.navigation:navigation-fragment:2.7.5")
+    implementation("com.google.firebase:firebase-firestore-ktx:24.10.0")
 
     //test
     testImplementation("junit:junit:4.13.2")

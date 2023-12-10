@@ -2,26 +2,29 @@ package com.cristian.miniproyecto2.view.fragments
 
 //import android.content.Intent.getIntent
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
-import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.cristian.miniproyecto2.databinding.FragmentInventarioBinding
-import com.cristian.miniproyecto2.model.Articulo
-import com.cristian.miniproyecto2.view.RecyclerAdapter
-import com.google.firebase.firestore.FirebaseFirestore
 import com.cristian.miniproyecto2.R
+import com.cristian.miniproyecto2.databinding.FragmentInventarioBinding
+import com.cristian.miniproyecto2.view.LoginActivity
+import com.cristian.miniproyecto2.view.RecyclerAdapter
+import com.cristian.miniproyecto2.viewmodel.InventarioViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class inventario : Fragment() {
     private lateinit var binding: FragmentInventarioBinding
     private lateinit var sharedPreferences: SharedPreferences
+    private val inventarioViewModel: InventarioViewModel by viewModels()
     private val db = FirebaseFirestore.getInstance()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,13 +38,11 @@ class inventario : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sharedPreferences = requireActivity().getSharedPreferences("shared", Context.MODE_PRIVATE)
-//        var art = Articulo(1, "Pollo", 20000, 4)
-//        guardarArticulo(art)
         recycler()
         controllers()
 
         //guardar sesión: cuando se tenga hecho el logout, descomentar la función XD
-        //saveLogin()
+        saveLogin()
 
     }
     private fun controllers() {
@@ -50,13 +51,16 @@ class inventario : Fragment() {
             findNavController().navigate(R.id.action_fragmentInventario_to_addProduct)
 
         }
+        binding.btnLogout.setOnClickListener{
+           logOut()
+        }
 
     }
 
 
 
     fun recycler(){
-        var listaArticulos = listarArticulos()
+        var listaArticulos = inventarioViewModel.listarArticulos()
 
         val recycler = binding.recyclerview
         recycler.layoutManager = LinearLayoutManager(context)
@@ -73,33 +77,15 @@ class inventario : Fragment() {
         }
     }
 
-    private fun guardarArticulo(articulo: Articulo){
-        db.collection("articulo").document(articulo.id.toString()).set(
-            hashMapOf(
-                "id" to articulo.id,
-                "name" to articulo.name,
-                "price" to articulo.price,
-                "quantity" to articulo.quantity
-            )
-        )
-    }
 
-    private fun listarArticulos(): MutableList<Articulo> {
-        var articulos = mutableListOf<Articulo>()
-        db.collection("articulo").get().addOnSuccessListener {
-            for (document in it.documents) {
-                val articulo = Articulo( // crea un objeto Articulo con los datos del documento
-                    id = document.get("id") as Long,
-                    name = document.get("name") as String,
-                    price = document.get("price") as Long,
-                    quantity = document.get("quantity") as Long
-                )
-                articulos.add(articulo) // añade el objeto Articulo a la lista articulos
-            }
+    private fun logOut() {
+        sharedPreferences.edit().clear().apply()
+        FirebaseAuth.getInstance().signOut()
+        (requireActivity()).apply {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
         }
-        return articulos
     }
-
     private fun saveLogin(){
         val bundle = requireActivity().intent.extras
         val email = bundle?.getString("email")

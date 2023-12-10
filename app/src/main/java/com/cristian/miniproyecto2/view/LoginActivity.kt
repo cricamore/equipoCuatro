@@ -29,12 +29,14 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var registrarText: TextView
 
     private var isPasswordVisible = false
+    private var launchedFromWidget: Boolean = false
 
     private val loginViewModel: LoginViewModel by viewModels()
     private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+        launchedFromWidget = intent.getBooleanExtra("launchedFromWidget", false)
 
         sharedPreferences = getSharedPreferences("shared", Context.MODE_PRIVATE)
 
@@ -140,9 +142,15 @@ class LoginActivity : AppCompatActivity() {
     private fun login(){
         val email = binding.email.text.toString()
         val pass = binding.password.text.toString()
+
         loginViewModel.loginUser(email,pass){ isLogin ->
             if (isLogin){
-                navInventory(email)
+                if(launchedFromWidget){
+                    sharedPreferences.edit().putString("email", email).apply()
+                    finish()
+                }else{
+                    navInventory(email)
+                }
             }else {
                 Toast.makeText(this, "Login incorrecto", Toast.LENGTH_SHORT).show()
             }
