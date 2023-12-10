@@ -9,20 +9,26 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.widget.RemoteViews
 import com.cristian.miniproyecto2.R
+import com.cristian.miniproyecto2.model.Articulo
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import java.text.NumberFormat
+import java.util.Locale
+
 
 /**
  * Implementation of App Widget functionality.
  */
 class WidgetAppInventory : AppWidgetProvider() {
     private lateinit var sharedPreferences: SharedPreferences
+    private val db = FirebaseFirestore.getInstance()
+
 
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray
     ) {
-
         // There may be multiple widgets active, so update all of them
         for (appWidgetId in appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId)
@@ -32,18 +38,18 @@ class WidgetAppInventory : AppWidgetProvider() {
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
         val action = intent!!.action ?: ""
+        val firebaseAuth = FirebaseAuth.getInstance()
 
         if (context != null && action == "changeIcon") {
-            val firebaseAuth = FirebaseAuth.getInstance()
             val perfs = context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
             val editor = perfs.edit()
 
-            if(firebaseAuth.currentUser == null){
+            if (firebaseAuth.currentUser == null) {
                 val intent = Intent(context, LoginActivity::class.java)
                 intent.putExtra("launchedFromWidget", true)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 context.startActivity(intent)
-            }else {
+            } else {
                 // Toggle the isEyeOpen value
                 editor.putBoolean("isEyeOpen", !perfs.getBoolean("isEyeOpen", false))
                 editor.apply()
@@ -55,6 +61,17 @@ class WidgetAppInventory : AppWidgetProvider() {
                 for (appWidgetId in appWidgetIds) {
                     updateAppWidget(context, appWidgetManager, appWidgetId)
                 }
+            }
+        } else if (context != null && action == "gestionarInventario") {
+            if (firebaseAuth.currentUser == null) {
+                val intent = Intent(context, LoginActivity::class.java)
+                intent.putExtra("launchedFromWidget", true)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                context.startActivity(intent)
+            } else {
+                val intent = Intent(context, InventarioActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                context.startActivity(intent)
             }
         }
     }
@@ -79,6 +96,24 @@ class WidgetAppInventory : AppWidgetProvider() {
         )
     }
 
+    private fun sumaPrecios(callback: (Long) -> Unit) {
+        var articulos = mutableListOf<Articulo>()
+        var suma = 0L
+        db.collection("articulo").get().addOnSuccessListener {
+            for (document in it.documents) {
+                val articulo = Articulo(
+                    id = document.get("id") as Long,
+                    name = document.get("name") as String,
+                    price = document.get("price") as Long,
+                    quantity = document.get("quantity") as Long
+                )
+                articulos.add(articulo)
+                suma += articulo.price * articulo.quantity
+            }
+            callback(suma)  // Pass the sum to the callback function
+        }
+    }
+
 
     private fun updateAppWidget(
         context: Context,
@@ -96,16 +131,23 @@ class WidgetAppInventory : AppWidgetProvider() {
             if (isEyeOpen) R.drawable.eye_off_outline else R.drawable.eye_outline
         views.setImageViewResource(R.id.eye, iconResource)
 
-        val textResource =
-            if (isEyeOpen) "326.000,00" else "* * * *"
-        views.setTextViewText(R.id.dinero, textResource)
+        sumaPrecios { sum ->
+            var currency = NumberFormat.getNumberInstance(Locale("es", "ES")).format(sum)
+            var textResource =
+                if (isEyeOpen) {
+                    "$currency" + ",00"
+                } else "* * * *"
+            views.setTextViewText(R.id.dinero, textResource)
+            appWidgetManager.updateAppWidget(appWidgetId, views)
+        }
 
         // Create an Intent with the "changeIcon" action
         val intent = Intent(context, WidgetAppInventory::class.java)
         intent.action = "changeIcon"
+        intent.action = "gestionarInventario"
 
-        // Associate the PendingIntent with the eye icon view
         views.setOnClickPendingIntent(R.id.eye, pendingIntent(context, "changeIcon"))
+        views.setOnClickPendingIntent(R.id.tuerca, pendingIntent(context, "gestionarInventario"))
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views)
