@@ -41,7 +41,7 @@ class inventario : Fragment() {
         recycler()
         controllers()
 
-        //guardar sesión: cuando se tenga hecho el logout, descomentar la función XD
+
         saveLogin()
 
     }
