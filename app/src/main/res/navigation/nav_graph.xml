@@ -21,7 +21,11 @@
         android:name="com.cristian.miniproyecto2.view.fragments.AddProduct"
         android:label="AddProduct"
         tools:layout="@layout/fragment_add_product"
-        />
+        >
+    <action
+        android:id="@+id/action_fragmentAddProduct_to_inventario"
+        app:destination="@id/fragmentInventario" />
+    </fragment>
 
 
 </navigation>

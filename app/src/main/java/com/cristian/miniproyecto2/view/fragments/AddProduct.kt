@@ -8,9 +8,11 @@ import android.widget.Button
 import com.cristian.miniproyecto2.R
 import com.google.android.material.textfield.TextInputEditText
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.cristian.miniproyecto2.databinding.FragmentAddProductBinding
 
 class AddProduct : Fragment() {
-
+    private lateinit var binding: FragmentAddProductBinding
     private lateinit var codigoEditText: TextInputEditText
     private lateinit var nombreEditText: TextInputEditText
     private lateinit var precioEditText: TextInputEditText
@@ -23,7 +25,6 @@ class AddProduct : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_add_product, container, false)
 
-        // Obtener referencias a los elementos de la interfaz de usuario
         codigoEditText = view.findViewById(R.id.codigoEditText)
         nombreEditText = view.findViewById(R.id.nombreEditText)
         precioEditText = view.findViewById(R.id.precioEditText)
@@ -41,6 +42,15 @@ class AddProduct : Fragment() {
             // Acciones que se realizarán al hacer clic en el botón "Guardar"
             guardarProducto()
         }
+        controllers()
+    }
+    private fun controllers() {
+
+        binding.backButton.setOnClickListener{
+            findNavController().navigate(R.id.action_fragmentAddProduct_to_inventario)
+
+        }
+
     }
 
     private fun guardarProducto() {
