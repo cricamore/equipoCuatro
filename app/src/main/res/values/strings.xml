@@ -7,4 +7,11 @@
     <string name="password">Password</string>
     <string name="registrarse">Registrarse</string>
     <string name="min_pass">Mínimo 6 dígitos</string>
+    <string name="toolbar_title">Detalle del producto</string>
+    <string name="eliminar_producto">Eliminar</string>
+    <string name="toolbar_title_edit">Editar Producto</string>
+    <string name="nombre_articulo">Nombre artículo</string>
+    <string name="precio_articulo">Precio</string>
+    <string name="cant_articulo">Cantidad</string>
+    <string name="editar_producto">Editar</string>
 </resources>
