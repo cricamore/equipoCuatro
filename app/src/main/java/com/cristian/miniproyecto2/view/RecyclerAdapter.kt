@@ -1,8 +1,11 @@
 package com.cristian.miniproyecto2.view
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.cristian.miniproyecto2.R
 import com.cristian.miniproyecto2.databinding.ItemInventarioBinding
 import com.cristian.miniproyecto2.model.Articulo
 
@@ -24,6 +27,21 @@ class RecyclerAdapter(private val listaArticulos: MutableList<Articulo>): Recycl
 
     override fun onBindViewHolder(recyclerViewHolder:RecyclerViewHolder, position: Int) {
         val articulo = listaArticulos[position]
+        recyclerViewHolder.bindingItem.cvProductItem.setOnClickListener{
+            val idArticulo = listaArticulos[position].id
+            val nameArticulo = listaArticulos[position].name
+            val priceArticulo = listaArticulos[position].price
+            val quantityArticulo = listaArticulos[position].quantity
+
+            val bundle = Bundle().apply {
+                putLong("idArticulo", idArticulo)
+                putString("nameArticulo", nameArticulo)
+                putLong("priceArticulo", priceArticulo)
+                putLong("quantityArticulo", quantityArticulo)
+            }
+
+            recyclerViewHolder.itemView.findNavController().navigate(R.id.action_fragmentInventario_to_fragmentProductDetail, bundle)
+        }
         recyclerViewHolder.setItemProducto(articulo)
     }
 

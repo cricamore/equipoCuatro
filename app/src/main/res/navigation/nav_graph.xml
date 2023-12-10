@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_fragmentInventario_to_addProduct"
             app:destination="@id/fragmentAddProduct" />
+        <action
+            android:id="@+id/action_fragmentInventario_to_fragmentProductDetail"
+            app:destination="@id/fragmentProductDetail" />
     </fragment>
 
     <fragment
@@ -22,6 +25,27 @@
         android:label="AddProduct"
         tools:layout="@layout/fragment_add_product"
         />
+    <fragment
+        android:id="@+id/fragmentProductDetail"
+        android:name="com.cristian.miniproyecto2.view.fragments.FragmentProductDetail"
+        android:label="FragmentProductDetail"
+        tools:layout="@layout/fragment_product_detail">
+        <action
+            android:id="@+id/action_fragmentProductDetail_to_fragmentEditProduct"
+            app:destination="@id/fragmentEditProduct" />
+        <action
+            android:id="@+id/action_fragmentProductDetail_to_fragmentInventario"
+            app:destination="@id/fragmentInventario" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentEditProduct"
+        android:name="com.cristian.miniproyecto2.view.fragments.FragmentEditProduct"
+        android:label="FragmentEditProduct"
+        tools:layout="@layout/fragment_edit_product">
+        <action
+            android:id="@+id/action_fragmentEditProduct_to_fragmentProductDetail"
+            app:destination="@id/fragmentProductDetail" />
+    </fragment>
 
 
 </navigation>

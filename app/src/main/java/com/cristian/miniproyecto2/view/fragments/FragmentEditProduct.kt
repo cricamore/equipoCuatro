@@ -6,9 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.cristian.miniproyecto2.R
+import com.cristian.miniproyecto2.databinding.FragmentEditProductBinding
 
 class FragmentEditProduct : Fragment() {
-
+    lateinit var binding : FragmentEditProductBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -18,7 +19,9 @@ class FragmentEditProduct : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_product, container, false)
+        binding = FragmentEditProductBinding.inflate(inflater)
+        binding.lifecycleOwner = this
+        return binding.root
     }
 
 }

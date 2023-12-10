@@ -14,4 +14,5 @@
     <string name="precio_articulo">Precio</string>
     <string name="cant_articulo">Cantidad</string>
     <string name="editar_producto">Editar</string>
+    <string name="price_template">$ %s</string>
 </resources>
