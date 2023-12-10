@@ -5,13 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import com.cristian.miniproyecto2.R
-import com.cristian.miniproyecto2.databinding.FragmentProductDetailBinding
 
-class FragmentProductDetail : Fragment() {
-
-    lateinit var binding : FragmentProductDetailBinding
+class FragmentEditProduct : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,9 +18,7 @@ class FragmentProductDetail : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentProductDetailBinding.inflate(inflater)
-        binding.lifecycleOwner = this
-        return binding.root
+        return inflater.inflate(R.layout.fragment_edit_product, container, false)
     }
 
 }
