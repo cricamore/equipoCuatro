@@ -41,7 +41,7 @@ class inventario : Fragment() {
         controllers()
 
         //guardar sesión: cuando se tenga hecho el logout, descomentar la función XD
-        //saveLogin()
+//        saveLogin()
 
     }
     private fun controllers() {
