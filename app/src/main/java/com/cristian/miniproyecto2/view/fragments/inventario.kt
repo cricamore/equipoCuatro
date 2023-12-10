@@ -2,6 +2,7 @@ package com.cristian.miniproyecto2.view.fragments
 
 //import android.content.Intent.getIntent
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,8 +14,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cristian.miniproyecto2.R
 import com.cristian.miniproyecto2.databinding.FragmentInventarioBinding
+import com.cristian.miniproyecto2.view.LoginActivity
 import com.cristian.miniproyecto2.view.RecyclerAdapter
 import com.cristian.miniproyecto2.viewmodel.InventarioViewModel
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class inventario : Fragment() {
@@ -35,13 +38,11 @@ class inventario : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sharedPreferences = requireActivity().getSharedPreferences("shared", Context.MODE_PRIVATE)
-//        var art = Articulo(1, "Pollo", 20000, 4)
-//        guardarArticulo(art)
         recycler()
         controllers()
 
         //guardar sesión: cuando se tenga hecho el logout, descomentar la función XD
-//        saveLogin()
+        saveLogin()
 
     }
     private fun controllers() {
@@ -49,6 +50,9 @@ class inventario : Fragment() {
         binding.addButton.setOnClickListener{
             findNavController().navigate(R.id.action_fragmentInventario_to_addProduct)
 
+        }
+        binding.btnLogout.setOnClickListener{
+           logOut()
         }
 
     }
@@ -74,7 +78,14 @@ class inventario : Fragment() {
     }
 
 
-
+    private fun logOut() {
+        sharedPreferences.edit().clear().apply()
+        FirebaseAuth.getInstance().signOut()
+        (requireActivity()).apply {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
+    }
     private fun saveLogin(){
         val bundle = requireActivity().intent.extras
         val email = bundle?.getString("email")
