@@ -10,6 +10,17 @@
         android:name="com.cristian.miniproyecto2.view.fragments.inventario"
         android:label="Principal"
         tools:layout="@layout/fragment_inventario"
+        >
+        <action
+            android:id="@+id/action_fragmentInventario_to_addProduct"
+            app:destination="@id/fragmentAddProduct" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentAddProduct"
+        android:name="com.cristian.miniproyecto2.view.fragments.AddProduct"
+        android:label="AddProduct"
+        tools:layout="@layout/fragment_add_product"
         />
 
 

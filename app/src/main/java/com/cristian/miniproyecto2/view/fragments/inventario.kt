@@ -3,16 +3,19 @@ package com.cristian.miniproyecto2.view.fragments
 //import android.content.Intent.getIntent
 import android.content.Context
 import android.content.SharedPreferences
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cristian.miniproyecto2.databinding.FragmentInventarioBinding
 import com.cristian.miniproyecto2.model.Articulo
 import com.cristian.miniproyecto2.view.RecyclerAdapter
 import com.google.firebase.firestore.FirebaseFirestore
+import com.cristian.miniproyecto2.R
 
 class inventario : Fragment() {
     private lateinit var binding: FragmentInventarioBinding
@@ -35,11 +38,22 @@ class inventario : Fragment() {
 //        var art = Articulo(1, "Pollo", 20000, 4)
 //        guardarArticulo(art)
         recycler()
+        controllers()
 
         //guardar sesión: cuando se tenga hecho el logout, descomentar la función XD
 //        saveLogin()
 
     }
+    private fun controllers() {
+
+        binding.addButton.setOnClickListener{
+            findNavController().navigate(R.id.action_fragmentInventario_to_addProduct)
+
+        }
+
+    }
+
+
 
     fun recycler(){
         var listaArticulos = listarArticulos()
