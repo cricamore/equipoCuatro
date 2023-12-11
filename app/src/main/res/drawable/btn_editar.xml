@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Estado cuando el botón está habilitado -->
+    <item android:state_enabled="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="30dp" /> <!-- Ajusta este valor para el radio de las esquinas -->
+            <solid android:color="@color/eliminar_producto" /> <!-- Color de fondo habilitado -->
+        </shape>
+    </item>
+
+    <!-- Estado cuando el botón está deshabilitado -->
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle">
+            <corners android:radius="30dp" /> <!-- Ajusta este valor para el radio de las esquinas -->
+            <solid android:color="@color/gray" /> <!-- Color de fondo deshabilitado -->
+        </shape>
+    </item>
+</selector>
+

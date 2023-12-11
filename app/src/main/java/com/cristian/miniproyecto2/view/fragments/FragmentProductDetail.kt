@@ -82,7 +82,13 @@ class FragmentProductDetail : Fragment() {
         }
 
         binding.btnEdit.setOnClickListener{
-            Toast.makeText(requireContext(), "Clic en editar", Toast.LENGTH_LONG).show()
+            val bundle = Bundle().apply {
+                putLong("idArticulo", idArticulo)
+                putString("nameArticulo", nameArticulo)
+                putLong("priceArticulo", priceArticulo)
+                putLong("quantityArticulo", quantityArticulo)
+            }
+            findNavController().navigate(R.id.action_fragmentProductDetail_to_fragmentEditProduct, bundle)
         }
     }
 }

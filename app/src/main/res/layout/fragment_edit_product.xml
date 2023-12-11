@@ -78,10 +78,10 @@
                 android:hint="@string/nombre_articulo"
                 android:textColorHint="@color/white"
                 android:minHeight="48dp"
-                android:inputType="textEmailAddress"
+                android:inputType="text"
                 android:maxLength="40"
                 android:padding="8dp"
-                android:autofillHints="" />
+                android:autofillHints=""/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -103,8 +103,8 @@
                 android:hint="@string/precio_articulo"
                 android:textColorHint="@color/white"
                 android:minHeight="48dp"
-                android:inputType="textEmailAddress"
-                android:maxLength="40"
+                android:inputType="numberDecimal"
+                android:maxLength="20"
                 android:padding="8dp"
                 android:autofillHints="" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -128,16 +128,17 @@
                 android:hint="@string/cant_articulo"
                 android:textColorHint="@color/white"
                 android:minHeight="48dp"
-                android:inputType="textEmailAddress"
-                android:maxLength="40"
+                android:inputType="number"
+                android:maxLength="4"
                 android:padding="8dp"
                 android:autofillHints="" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnEditar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_delete_product"
+            android:background="@drawable/btn_editar"
             android:text="@string/editar_producto"
             android:textColor="@color/white"
             android:layout_marginTop="30dp"
