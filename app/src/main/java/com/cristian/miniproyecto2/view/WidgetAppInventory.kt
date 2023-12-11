@@ -65,7 +65,7 @@ class WidgetAppInventory : AppWidgetProvider() {
         } else if (context != null && action == "gestionarInventario") {
             if (firebaseAuth.currentUser == null) {
                 val intent = Intent(context, LoginActivity::class.java)
-                intent.putExtra("launchedFromWidget", true)
+//                intent.putExtra("launchedFromWidget", true)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 context.startActivity(intent)
             } else {
@@ -127,17 +127,23 @@ class WidgetAppInventory : AppWidgetProvider() {
 
         val isEyeOpen = perfs.getBoolean("isEyeOpen", false)
 
-        val iconResource =
-            if (isEyeOpen) R.drawable.eye_off_outline else R.drawable.eye_outline
-        views.setImageViewResource(R.id.eye, iconResource)
+//        val iconResource =
+//            if (isEyeOpen) R.drawable.eye_off_outline else R.drawable.eye_outline
+
 
         sumaPrecios { sum ->
             var currency = NumberFormat.getNumberInstance(Locale("es", "ES")).format(sum)
-            var textResource =
-                if (isEyeOpen) {
-                    "$currency" + ",00"
-                } else "* * * *"
+            val textResource: String
+            val iconResource: Int
+            if (isEyeOpen) {
+                    textResource = "$ "+ "$currency" + ",00"
+                    iconResource = R.drawable.eye_off_outline
+                } else {
+                    textResource = "$ * * * *"
+                    iconResource = R.drawable.eye_outline
+                }
             views.setTextViewText(R.id.dinero, textResource)
+            views.setImageViewResource(R.id.eye, iconResource)
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
 
