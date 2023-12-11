@@ -14,4 +14,8 @@
     <color name="grayinventario">#424242</color>
     <color name="red">@android:color/holo_red_dark</color>
     <color name="lightOrange">#FA8523</color>
+    <color name="toolbar_color">#424242</color>
+    <color name="product_detail">#CC000000</color>
+    <color name="eliminar_producto">#FF5F1F</color>
+    <color name="eliminar_producto_pressed">#D44C00</color>
 </resources>
