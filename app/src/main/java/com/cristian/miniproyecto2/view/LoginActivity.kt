@@ -20,7 +20,9 @@ import com.cristian.miniproyecto2.R
 import com.cristian.miniproyecto2.databinding.ActivityLoginBinding
 import com.cristian.miniproyecto2.viewmodel.LoginViewModel
 import com.google.android.material.textfield.TextInputEditText
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var emailEditText: TextInputEditText

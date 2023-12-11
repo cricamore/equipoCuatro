@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.cristian.miniproyecto2.R
 import com.cristian.miniproyecto2.databinding.FragmentProductDetailBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FragmentProductDetail : Fragment() {
 
     lateinit var binding : FragmentProductDetailBinding
