@@ -12,6 +12,8 @@ import androidx.navigation.fragment.findNavController
 import com.cristian.miniproyecto2.R
 import com.cristian.miniproyecto2.databinding.FragmentEditProductBinding
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.NumberFormat
+import java.util.Locale
 
 class FragmentEditProduct : Fragment() {
     lateinit var binding : FragmentEditProductBinding
@@ -106,7 +108,9 @@ class FragmentEditProduct : Fragment() {
     fun show() {
         binding.tvIdProduct.text = idArticulo.toString()
         binding.nombreArticulo.setText(nameArticulo) // Asigna directamente el texto sin castings
-        binding.precioArticulo.setText(priceArticulo.toString()) // Convierte a String y establece el texto
+        val formattedPrice = NumberFormat.getNumberInstance(Locale("es", "ES")).format(priceArticulo)
+        binding.precioArticulo.setText(String.format("%s,00", formattedPrice))
+        //binding.precioArticulo.setText(priceArticulo.toString()) // Convierte a String y establece el texto
         binding.cantidadArticulo.setText(quantityArticulo.toString()) // Convierte a String y establece el texto
     }
 

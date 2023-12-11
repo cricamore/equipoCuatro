@@ -10,6 +10,8 @@ import androidx.navigation.fragment.findNavController
 import com.cristian.miniproyecto2.R
 import com.cristian.miniproyecto2.databinding.FragmentProductDetailBinding
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.NumberFormat
+import java.util.Locale
 
 class FragmentProductDetail : Fragment() {
 
@@ -50,13 +52,15 @@ class FragmentProductDetail : Fragment() {
     fun show(){
         binding.productName.text = nameArticulo
         val priceTemplate = getString(R.string.price_template)
-        val formattedPrice = String.format(priceTemplate, priceArticulo)
+
+        val pricePoints = NumberFormat.getNumberInstance(Locale("es", "ES")).format(priceArticulo)
+        val formattedPrice = String.format(priceTemplate, pricePoints)
         binding.priceValue.text = formattedPrice
         binding.quantityValue.text = quantityArticulo.toString()
 
         val total = priceArticulo * quantityArticulo
-
-        val formattedTotal = String.format(priceTemplate, total)
+        val totalPoints = NumberFormat.getNumberInstance(Locale("es", "ES")).format(total)
+        val formattedTotal = String.format(priceTemplate, totalPoints)
         binding.totalValue.text = formattedTotal
 
     }

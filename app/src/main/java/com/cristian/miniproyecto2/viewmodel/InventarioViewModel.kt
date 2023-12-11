@@ -32,7 +32,6 @@ class InventarioViewModel : ViewModel() {
                     quantity = document.get("quantity") as Long
                 )
                 articulos.add(articulo) // añade el objeto Articulo a la lista articulos
-                suma += articulo.price * articulo.quantity
             }
         }
         return articulos
