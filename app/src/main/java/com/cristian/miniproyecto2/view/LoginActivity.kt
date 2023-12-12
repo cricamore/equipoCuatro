@@ -147,7 +147,7 @@ class LoginActivity : AppCompatActivity() {
             if (isLogin){
                 if(launchedFromWidget){
                     sharedPreferences.edit().putString("email", email).apply()
-                    finish()
+                    finishAffinity()
                 }else{
                     navInventory(email)
                 }
