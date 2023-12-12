@@ -12,7 +12,7 @@ class RecyclerViewHolder(binding: ItemInventarioBinding): RecyclerView.ViewHolde
     fun setItemProducto(articulo: Articulo){
         bindingItem.nombre.text = articulo.name
         val formatPrice = NumberFormat.getNumberInstance(Locale("es", "ES")).format(articulo.price)
-        bindingItem.price.text = formatPrice + ",00"
+        bindingItem.price.text = "$ " + formatPrice + ",00"
         bindingItem.id.text = articulo.id.toString()
     }
 }
