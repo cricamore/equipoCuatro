@@ -22,13 +22,13 @@ class InventarioRepository @Inject constructor(
 
     fun listarArticulos(): MutableList<Articulo> {
         var articulos = mutableListOf<Articulo>()
-        var suma = 0L
+        var suma = 0.0
         db.collection("articulo").get().addOnSuccessListener {
             for (document in it.documents) {
                 val articulo = Articulo( // crea un objeto Articulo con los datos del documento
                     id = document.get("id") as Long,
                     name = document.get("name") as String,
-                    price = document.get("price") as Long,
+                    price = document.get("price") as Double,
                     quantity = document.get("quantity") as Long
                 )
                 articulos.add(articulo) // añade el objeto Articulo a la lista articulos

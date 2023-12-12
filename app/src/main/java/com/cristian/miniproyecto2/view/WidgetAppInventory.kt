@@ -96,15 +96,15 @@ class WidgetAppInventory : AppWidgetProvider() {
         )
     }
 
-    private fun sumaPrecios(callback: (Long) -> Unit) {
+    private fun sumaPrecios(callback: (Double) -> Unit) {
         var articulos = mutableListOf<Articulo>()
-        var suma = 0L
+        var suma = 0.0
         db.collection("articulo").get().addOnSuccessListener {
             for (document in it.documents) {
                 val articulo = Articulo(
                     id = document.get("id") as Long,
                     name = document.get("name") as String,
-                    price = document.get("price") as Long,
+                    price = document.get("price") as Double,
                     quantity = document.get("quantity") as Long
                 )
                 articulos.add(articulo)

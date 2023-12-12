@@ -5,14 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
-import com.cristian.miniproyecto2.R
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.cristian.miniproyecto2.databinding.FragmentAddProductBinding
 import androidx.core.content.ContextCompat
-import com.cristian.miniproyecto2.model.Articulo
+import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.cristian.miniproyecto2.R
+import com.cristian.miniproyecto2.databinding.FragmentAddProductBinding
+import com.cristian.miniproyecto2.model.Articulo
 import com.cristian.miniproyecto2.viewmodel.InventarioViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -76,7 +76,7 @@ class AddProduct : Fragment() {
     private fun guardarProducto() {
         val codigo = binding.codigoEditText.text.toString().trim().toLong()
         val nombre = binding.nombreEditText.text.toString().trim()
-        val precio = binding.precioEditText.text.toString().trim().toLong()
+        val precio = binding.precioEditText.text.toString().trim().toDouble()
         val cantidad = binding.cantidadEditText.text.toString().trim().toLong()
 
         val nuevoArticulo = Articulo(

@@ -14,6 +14,7 @@ class InventarioViewModel : ViewModel() {
     }
 
     fun listarArticulos(): MutableList<Articulo> {
+        repository.guardarArticulo(Articulo(3, "Pera", 340.12, 5))
         return repository.listarArticulos()
     }
 }
