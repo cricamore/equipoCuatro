@@ -43,7 +43,7 @@ class inventario : Fragment() {
         recycler()
         controllers()
 
-
+//        progressBarHorizonal()
         saveLogin()
 
     }
@@ -60,10 +60,15 @@ class inventario : Fragment() {
     }
 
 
-
+//    private fun progressBarHorizonal() {
+//        while (binding.pbCircular.progress < binding.pbCircular.max) {
+//            sleep(20L)
+//            binding.pbCircular.incrementProgressBy(5)
+//        }
+//    }
     fun recycler(){
         var listaArticulos = inventarioViewModel.listarArticulos()
-
+        var adapter = RecyclerAdapter(listaArticulos)
         val recycler = binding.recyclerview
         recycler.layoutManager = LinearLayoutManager(context)
         db.collection("articulo").document().addSnapshotListener{value, error->
@@ -72,7 +77,9 @@ class inventario : Fragment() {
             }
             value?.let{
 //                val data = value.toObjects(Articulo::class.java)
-                val adapter = RecyclerAdapter(listaArticulos)
+                adapter = RecyclerAdapter(listaArticulos)
+                binding.lista.visibility = View.VISIBLE
+                binding.progress.visibility = View.INVISIBLE
                 recycler.adapter = adapter
                 adapter.notifyDataSetChanged()
             }

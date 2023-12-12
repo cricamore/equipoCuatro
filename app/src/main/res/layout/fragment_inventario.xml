@@ -1,72 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    <layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".view.fragments.inventario">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/blackinventario" />
-
-        <TextView
-            android:id="@+id/toolbarTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Inventario"
-            android:layout_marginTop="18dp"
-            android:layout_marginStart="20dp"
-            android:textColor="@android:color/white"
-            android:textSize="20sp" />
-
-
-        <ImageView
-            android:id="@+id/btnLogout"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="?attr/selectableItemBackground"
-            android:contentDescription="Logout"
-            android:src="@drawable/logout"
-            android:layout_alignEnd="@id/toolbar"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="15dp"
-
-            />
-
-        <FrameLayout
-            android:layout_below="@id/toolbar"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/grayinventario">
+            tools:context=".view.fragments.inventario">
 
-            <!-- Contenido de tu fragmento -->
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/blackinventario" />
+
+            <TextView
+                android:id="@+id/toolbarTitle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Inventario"
+                android:layout_marginTop="18dp"
+                android:layout_marginStart="20dp"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+
+
+            <ImageView
+                android:id="@+id/btnLogout"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="Logout"
+                android:src="@drawable/logout"
+                android:layout_alignEnd="@id/toolbar"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp"
+
+                />
+
+
+            <FrameLayout
+                android:id="@+id/lista"
                 android:layout_below="@id/toolbar"
-                android:nestedScrollingEnabled="true"
-                tools:listitem="@layout/item_inventario" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/grayinventario"
+                android:visibility="gone">
 
-        </FrameLayout>
-        <!-- FloatingActionButton u otros elementos -->
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/addButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="19dp"
-            android:backgroundTint="#FF5733"
-            android:src="@drawable/baseline_add_24" />
+                <!-- Contenido de tu fragmento -->
 
-    </RelativeLayout>
-</layout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/toolbar"
+                    android:nestedScrollingEnabled="true"
+                    tools:listitem="@layout/item_inventario" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/progress"
+                android:layout_below="@id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/grayinventario">
+            <ProgressBar
+                android:indeterminateTint="@color/orange"
+                android:id="@+id/pbCircular"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:max="100"
+                android:progress="5"
+                />
+            </FrameLayout>
+
+            <!-- FloatingActionButton u otros elementos -->
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/addButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="18dp"
+                android:layout_marginBottom="19dp"
+                android:backgroundTint="#FF5733"
+                android:src="@drawable/baseline_add_24" />
+
+        </RelativeLayout>
+    </layout>
