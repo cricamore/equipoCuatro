@@ -14,10 +14,10 @@ import androidx.core.content.ContextCompat
 import com.cristian.miniproyecto2.model.Articulo
 import androidx.fragment.app.viewModels
 import com.cristian.miniproyecto2.viewmodel.InventarioViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 
-
-
+@AndroidEntryPoint
 class AddProduct : Fragment() {
     private lateinit var binding: FragmentAddProductBinding
     private val inventarioViewModel: InventarioViewModel by viewModels()

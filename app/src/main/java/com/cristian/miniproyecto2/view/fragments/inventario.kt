@@ -19,7 +19,9 @@ import com.cristian.miniproyecto2.view.RecyclerAdapter
 import com.cristian.miniproyecto2.viewmodel.InventarioViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class inventario : Fragment() {
     private lateinit var binding: FragmentInventarioBinding
     private lateinit var sharedPreferences: SharedPreferences
