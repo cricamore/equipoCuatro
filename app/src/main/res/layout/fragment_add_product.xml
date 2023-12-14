@@ -98,7 +98,8 @@
                     android:id="@+id/precioEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
+                    android:digits="0123456789."
                     android:textColor="@android:color/white"
                     android:maxLength="20"
                     android:maxEms="20" />
