@@ -26,7 +26,7 @@ class FragmentProductDetail : Fragment() {
     var idArticulo : Long = 0
     var priceArticulo : Double = 0.0
     var quantityArticulo : Long = 0
-    private val db = FirebaseFirestore.getInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }

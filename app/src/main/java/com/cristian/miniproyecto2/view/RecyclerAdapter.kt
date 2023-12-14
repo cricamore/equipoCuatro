@@ -10,7 +10,7 @@ import com.cristian.miniproyecto2.databinding.ItemInventarioBinding
 import com.cristian.miniproyecto2.model.Articulo
 
 
-class RecyclerAdapter(private val listaArticulos: MutableList<Articulo>): RecyclerView.Adapter<RecyclerViewHolder>(){
+class RecyclerAdapter(private val listaArticulos: List<Articulo>): RecyclerView.Adapter<RecyclerViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): RecyclerViewHolder {
         val context = parent.context
@@ -45,11 +45,6 @@ class RecyclerAdapter(private val listaArticulos: MutableList<Articulo>): Recycl
         recyclerViewHolder.setItemProducto(articulo)
     }
 
-    fun actualizarLista(nuevaLista: List<Articulo>) {
-        listaArticulos.clear()
-        listaArticulos.addAll(nuevaLista)
-        notifyDataSetChanged()
-    }
 
 
 }

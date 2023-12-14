@@ -12,6 +12,7 @@ import android.widget.RemoteViews
 import androidx.lifecycle.ViewModelProvider
 import com.cristian.miniproyecto2.R
 import com.cristian.miniproyecto2.viewmodel.InventarioViewModel
+import com.cristian.miniproyecto2.viewmodel.widgetViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,11 +23,9 @@ import java.util.Locale
 /**
  * Implementation of App Widget functionality.
  */
-@AndroidEntryPoint
 class WidgetAppInventory : AppWidgetProvider() {
     private lateinit var sharedPreferences: SharedPreferences
-    private val inventarioViewModel = ViewModelProvider.NewInstanceFactory().create(InventarioViewModel::class.java)
-
+    private val widgetViewModel = ViewModelProvider.NewInstanceFactory().create(widgetViewModel::class.java)
 
     override fun onUpdate(
         context: Context,
@@ -42,7 +41,6 @@ class WidgetAppInventory : AppWidgetProvider() {
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
         val action = intent!!.action ?: ""
-        val firebaseAuth = FirebaseAuth.getInstance()
 
         if (context != null && action == "changeIcon") {
             val perfs = context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
@@ -109,7 +107,7 @@ class WidgetAppInventory : AppWidgetProvider() {
     }
 
     private fun sumaPrecios(callback: (Double) -> Unit) {
-        inventarioViewModel.calcularSumaPrecios(callback)
+        widgetViewModel.calcularSumaPrecios(callback)
     }
 
     private fun updateAppWidget(

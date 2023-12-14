@@ -65,7 +65,7 @@ class LoginViewModelTest{
     }
 
     @Test
-    fun testSesion_EnableView() {
+    fun `test method Sesion_EnableView`() {
         //given
         val email = "test@example.com"
 

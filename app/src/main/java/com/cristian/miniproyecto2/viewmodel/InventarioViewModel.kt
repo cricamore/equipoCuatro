@@ -2,21 +2,26 @@ package com.cristian.miniproyecto2.viewmodel
 
 import android.content.Context
 import android.widget.Toast
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.cristian.miniproyecto2.model.Articulo
 import com.cristian.miniproyecto2.repository.InventarioRepository
 import com.google.firebase.firestore.FirebaseFirestore
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class InventarioViewModel : ViewModel() {
-    private val repository = InventarioRepository()
+@HiltViewModel
+class InventarioViewModel @Inject constructor(
+    private val repository : InventarioRepository
+): ViewModel() {
 
     fun guardarArticulo(articulo: Articulo) {
         repository.guardarArticulo(articulo)
     }
 
-    fun listarArticulos(): MutableList<Articulo> {
-        repository.guardarArticulo(Articulo(3, "Pera", 340.12, 5))
-        return repository.listarArticulos()
+    fun listarArticulos(callback: (List<Articulo>) -> Unit) {
+        repository.listarArticulos(callback)
     }
 
     fun editarArticulo(idArticulo: String, nombreArticulo: String, precioArticulo: Double, cantidadArticulo: Long, contexto: Context){
@@ -27,11 +32,4 @@ class InventarioViewModel : ViewModel() {
         repository.eliminarArticulo(idArticulo, contexto)
     }
 
-    fun calcularSumaPrecios(callback: (Double) -> Unit) {
-        repository.sumaPrecios(callback)
-    }
-
-    fun obtenerArticulosEnTiempoReal(callback: (List<Articulo>) -> Unit) {
-        repository.obtenerArticulosEnTiempoReal(callback)
-    }
 }

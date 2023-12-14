@@ -18,6 +18,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import com.cristian.miniproyecto2.R
 import com.cristian.miniproyecto2.databinding.ActivityLoginBinding
+import com.cristian.miniproyecto2.viewmodel.InventarioViewModel
 import com.cristian.miniproyecto2.viewmodel.LoginViewModel
 import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,6 +35,7 @@ class LoginActivity : AppCompatActivity() {
     private var launchedFromWidget: Boolean = false
 
     private val loginViewModel: LoginViewModel by viewModels()
+    private val inventarioViewModel: InventarioViewModel by viewModels()
     private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

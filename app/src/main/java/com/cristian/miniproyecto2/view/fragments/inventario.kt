@@ -18,7 +18,6 @@ import com.cristian.miniproyecto2.view.LoginActivity
 import com.cristian.miniproyecto2.view.RecyclerAdapter
 import com.cristian.miniproyecto2.viewmodel.InventarioViewModel
 import com.cristian.miniproyecto2.viewmodel.LoginViewModel
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,7 +27,6 @@ class inventario : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
     private val inventarioViewModel: InventarioViewModel by viewModels()
     private val loginViewModel: LoginViewModel by viewModels()
-    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,7 +43,7 @@ class inventario : Fragment() {
         recycler()
         controllers()
 
-//        progressBarHorizonal()
+        //progressBarHorizonal()
         saveLogin()
 
     }
@@ -62,47 +60,25 @@ class inventario : Fragment() {
     }
 
 
+/*    private fun progressBarHorizonal() {
+        while (binding.pbCircular.progress < binding.pbCircular.max) {
+            sleep(20L)
+            binding.pbCircular.incrementProgressBy(5)
+        }
+    }*/
+
     private fun recycler() {
-        var listaArticulos = inventarioViewModel.listarArticulos()
         val recycler = binding.recyclerview
         recycler.layoutManager = LinearLayoutManager(context)
 
-        val adapter = RecyclerAdapter(listaArticulos)
-        recycler.adapter = adapter
-
-        inventarioViewModel.obtenerArticulosEnTiempoReal { articulos ->
-            adapter.actualizarLista(articulos)
+        inventarioViewModel.listarArticulos { listaArticulos ->
+            val adapter = RecyclerAdapter(listaArticulos)
             binding.lista.visibility = View.VISIBLE
             binding.progress.visibility = View.INVISIBLE
+            recycler.adapter = adapter
+            adapter.notifyDataSetChanged()
         }
     }
-
-
-//    private fun progressBarHorizonal() {
-//        while (binding.pbCircular.progress < binding.pbCircular.max) {
-//            sleep(20L)
-//            binding.pbCircular.incrementProgressBy(5)
-//        }
-//    }
-    /* fun recycler(){
-        var listaArticulos = inventarioViewModel.listarArticulos()
-        var adapter = RecyclerAdapter(listaArticulos)
-        val recycler = binding.recyclerview
-        recycler.layoutManager = LinearLayoutManager(context)
-        db.collection("articulo").document().addSnapshotListener{value, error->
-            error?.let{
-                error(error)
-            }
-            value?.let{
-//                val data = value.toObjects(Articulo::class.java)
-                adapter = RecyclerAdapter(listaArticulos)
-                binding.lista.visibility = View.VISIBLE
-                binding.progress.visibility = View.INVISIBLE
-                recycler.adapter = adapter
-                adapter.notifyDataSetChanged()
-            }
-        }
-    } */
 
 
     private fun logOut() {

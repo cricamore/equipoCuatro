@@ -27,7 +27,7 @@ class FragmentEditProduct : Fragment() {
     var idArticulo : Long = 0
     var priceArticulo : Double = 0.0
     var quantityArticulo : Long = 0
-    private val db = FirebaseFirestore.getInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -105,14 +105,13 @@ class FragmentEditProduct : Fragment() {
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
         override fun afterTextChanged(s: Editable?) {
-            // Verificar si alguno de los campos está vacío
             val nombreArticulo = binding.nombreArticulo.text.toString()
             val precioArticulo = binding.precioArticulo.text.toString()
             val cantidadArticulo = binding.cantidadArticulo.text.toString()
 
             val algunCampoVacio = nombreArticulo.isEmpty() || precioArticulo.isEmpty() || cantidadArticulo.isEmpty()
 
-            // Desactivar el botón si algún campo está vacío
+
             binding.btnEditar.isEnabled = !algunCampoVacio
         }
     }
