@@ -45,5 +45,11 @@ class RecyclerAdapter(private val listaArticulos: MutableList<Articulo>): Recycl
         recyclerViewHolder.setItemProducto(articulo)
     }
 
+    fun actualizarLista(nuevaLista: List<Articulo>) {
+        listaArticulos.clear()
+        listaArticulos.addAll(nuevaLista)
+        notifyDataSetChanged()
+    }
+
 
 }

@@ -17,6 +17,7 @@ import com.cristian.miniproyecto2.databinding.FragmentInventarioBinding
 import com.cristian.miniproyecto2.view.LoginActivity
 import com.cristian.miniproyecto2.view.RecyclerAdapter
 import com.cristian.miniproyecto2.viewmodel.InventarioViewModel
+import com.cristian.miniproyecto2.viewmodel.LoginViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,6 +27,7 @@ class inventario : Fragment() {
     private lateinit var binding: FragmentInventarioBinding
     private lateinit var sharedPreferences: SharedPreferences
     private val inventarioViewModel: InventarioViewModel by viewModels()
+    private val loginViewModel: LoginViewModel by viewModels()
     private val db = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
@@ -60,13 +62,29 @@ class inventario : Fragment() {
     }
 
 
+    private fun recycler() {
+        var listaArticulos = inventarioViewModel.listarArticulos()
+        val recycler = binding.recyclerview
+        recycler.layoutManager = LinearLayoutManager(context)
+
+        val adapter = RecyclerAdapter(listaArticulos)
+        recycler.adapter = adapter
+
+        inventarioViewModel.obtenerArticulosEnTiempoReal { articulos ->
+            adapter.actualizarLista(articulos)
+            binding.lista.visibility = View.VISIBLE
+            binding.progress.visibility = View.INVISIBLE
+        }
+    }
+
+
 //    private fun progressBarHorizonal() {
 //        while (binding.pbCircular.progress < binding.pbCircular.max) {
 //            sleep(20L)
 //            binding.pbCircular.incrementProgressBy(5)
 //        }
 //    }
-    fun recycler(){
+    /* fun recycler(){
         var listaArticulos = inventarioViewModel.listarArticulos()
         var adapter = RecyclerAdapter(listaArticulos)
         val recycler = binding.recyclerview
@@ -84,12 +102,12 @@ class inventario : Fragment() {
                 adapter.notifyDataSetChanged()
             }
         }
-    }
+    } */
 
 
     private fun logOut() {
         sharedPreferences.edit().clear().apply()
-        FirebaseAuth.getInstance().signOut()
+        loginViewModel.logOut()
         (requireActivity()).apply {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()

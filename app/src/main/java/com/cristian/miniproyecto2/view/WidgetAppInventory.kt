@@ -7,11 +7,14 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.util.Log
 import android.widget.RemoteViews
+import androidx.lifecycle.ViewModelProvider
 import com.cristian.miniproyecto2.R
-import com.cristian.miniproyecto2.model.Articulo
+import com.cristian.miniproyecto2.viewmodel.InventarioViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -19,9 +22,10 @@ import java.util.Locale
 /**
  * Implementation of App Widget functionality.
  */
+@AndroidEntryPoint
 class WidgetAppInventory : AppWidgetProvider() {
     private lateinit var sharedPreferences: SharedPreferences
-    private val db = FirebaseFirestore.getInstance()
+    private val inventarioViewModel = ViewModelProvider.NewInstanceFactory().create(InventarioViewModel::class.java)
 
 
     override fun onUpdate(
@@ -43,12 +47,17 @@ class WidgetAppInventory : AppWidgetProvider() {
         if (context != null && action == "changeIcon") {
             val perfs = context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
             val editor = perfs.edit()
+            sharedPreferences = context.getSharedPreferences("shared",Context.MODE_PRIVATE)
+            val email = sharedPreferences.getString("email",null)
+            Log.d("TAG","Email"+email)
+            Log.d("TAG","entré")
 
-            if (firebaseAuth.currentUser == null) {
+            if (email == null) {
                 val intent = Intent(context, LoginActivity::class.java)
                 intent.putExtra("launchedFromWidget", true)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 context.startActivity(intent)
+                Log.d("TAG","entré2")
             } else {
                 // Toggle the isEyeOpen value
                 editor.putBoolean("isEyeOpen", !perfs.getBoolean("isEyeOpen", false))
@@ -63,7 +72,10 @@ class WidgetAppInventory : AppWidgetProvider() {
                 }
             }
         } else if (context != null && action == "gestionarInventario") {
-            if (firebaseAuth.currentUser == null) {
+            sharedPreferences = context.getSharedPreferences("shared", Context.MODE_PRIVATE)
+            val email = sharedPreferences.getString("email",null)
+
+            if (email == null) {
                 val intent = Intent(context, LoginActivity::class.java)
 //                intent.putExtra("launchedFromWidget", true)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -97,23 +109,8 @@ class WidgetAppInventory : AppWidgetProvider() {
     }
 
     private fun sumaPrecios(callback: (Double) -> Unit) {
-        var articulos = mutableListOf<Articulo>()
-        var suma = 0.0
-        db.collection("articulo").get().addOnSuccessListener {
-            for (document in it.documents) {
-                val articulo = Articulo(
-                    id = document.get("id") as Long,
-                    name = document.get("name") as String,
-                    price = document.get("price") as Double,
-                    quantity = document.get("quantity") as Long
-                )
-                articulos.add(articulo)
-                suma += articulo.price * articulo.quantity.toDouble()
-            }
-            callback(suma)  // Pass the sum to the callback function
-        }
+        inventarioViewModel.calcularSumaPrecios(callback)
     }
-
 
     private fun updateAppWidget(
         context: Context,
@@ -136,7 +133,7 @@ class WidgetAppInventory : AppWidgetProvider() {
             val textResource: String
             val iconResource: Int
             if (isEyeOpen) {
-                    textResource = "$ "+ "$currency" + ",00"
+                    textResource = "$ "+ "$currency"
                     iconResource = R.drawable.eye_off_outline
                 } else {
                     textResource = "$ * * * *"

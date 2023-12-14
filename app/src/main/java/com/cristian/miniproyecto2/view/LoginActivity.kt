@@ -148,6 +148,7 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.loginUser(email,pass){ isLogin ->
             if (isLogin){
                 if(launchedFromWidget){
+                    Log.d("TAG","entréLaunched")
                     sharedPreferences.edit().putString("email", email).apply()
                     finishAffinity()
                 }else{

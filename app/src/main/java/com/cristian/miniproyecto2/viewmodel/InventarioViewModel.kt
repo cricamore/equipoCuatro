@@ -8,7 +8,6 @@ import com.cristian.miniproyecto2.repository.InventarioRepository
 import com.google.firebase.firestore.FirebaseFirestore
 
 class InventarioViewModel : ViewModel() {
-    private val db = FirebaseFirestore.getInstance()
     private val repository = InventarioRepository()
 
     fun guardarArticulo(articulo: Articulo) {
@@ -26,5 +25,13 @@ class InventarioViewModel : ViewModel() {
 
     fun eliminarArticulo(idArticulo: String, contexto: Context){
         repository.eliminarArticulo(idArticulo, contexto)
+    }
+
+    fun calcularSumaPrecios(callback: (Double) -> Unit) {
+        repository.sumaPrecios(callback)
+    }
+
+    fun obtenerArticulosEnTiempoReal(callback: (List<Articulo>) -> Unit) {
+        repository.obtenerArticulosEnTiempoReal(callback)
     }
 }

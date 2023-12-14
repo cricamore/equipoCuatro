@@ -36,4 +36,8 @@ class LoginRepository @Inject constructor(
             isLogin(false)
         }
     }
+
+    fun logout(){
+        firebaseAuth.signOut()
+    }
 }

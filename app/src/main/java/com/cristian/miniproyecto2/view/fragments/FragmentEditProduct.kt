@@ -91,7 +91,7 @@ class FragmentEditProduct : Fragment() {
     }
 
     fun show() {
-        binding.tvIdProduct.text = idArticulo.toString()
+        binding.tvIdProduct.text = "Id: " + idArticulo.toString()
         binding.nombreArticulo.setText(nameArticulo) // Asigna directamente el texto sin castings
         val formattedPrice = NumberFormat.getNumberInstance(Locale("es", "ES")).format(priceArticulo)
         binding.precioArticulo.setText(String.format("%s,00", formattedPrice))

@@ -82,4 +82,42 @@ class InventarioRepository @Inject constructor(
         }
         return articulos
     }
+
+    fun obtenerArticulosEnTiempoReal(callback: (List<Articulo>) -> Unit) {
+        db.collection("articulo").addSnapshotListener { value, error ->
+            error?.let {
+                // Manejar el error si es necesario
+                callback(emptyList())
+            }
+            value?.let {
+                val articulos = mutableListOf<Articulo>()
+                for (document in it.documents) {
+                    val articulo = Articulo(
+                        id = document.get("id") as Long,
+                        name = document.get("name") as String,
+                        price = document.get("price") as Double,
+                        quantity = document.get("quantity") as Long
+                    )
+                    articulos.add(articulo)
+                }
+                callback(articulos)
+            }
+        }
+    }
+
+    fun sumaPrecios(callback: (Double) -> Unit) {
+        var suma = 0.0
+        db.collection("articulo").get().addOnSuccessListener { result ->
+            for (document in result.documents) {
+                val articulo = Articulo(
+                    id = document.get("id") as Long,
+                    name = document.get("name") as String,
+                    price = document.get("price") as Double,
+                    quantity = document.get("quantity") as Long
+                )
+                suma += articulo.price * articulo.quantity.toDouble()
+            }
+            callback(suma)
+        }
+    }
 }

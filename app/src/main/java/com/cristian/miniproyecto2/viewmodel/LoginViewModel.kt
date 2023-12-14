@@ -30,4 +30,7 @@ class LoginViewModel @Inject constructor(
             isEnableView(false)
         }
     }
+    fun logOut(){
+        repository.logout()
+    }
 }
