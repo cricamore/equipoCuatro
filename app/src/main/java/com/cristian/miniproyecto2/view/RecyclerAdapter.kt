@@ -36,7 +36,7 @@ class RecyclerAdapter(private val listaArticulos: MutableList<Articulo>): Recycl
             val bundle = Bundle().apply {
                 putLong("idArticulo", idArticulo)
                 putString("nameArticulo", nameArticulo)
-                putLong("priceArticulo", priceArticulo)
+                putDouble("priceArticulo", priceArticulo.toDouble())
                 putLong("quantityArticulo", quantityArticulo)
             }
 

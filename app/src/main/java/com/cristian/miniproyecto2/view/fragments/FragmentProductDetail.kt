@@ -6,15 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.cristian.miniproyecto2.R
 import com.cristian.miniproyecto2.databinding.FragmentProductDetailBinding
+import com.cristian.miniproyecto2.viewmodel.InventarioViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.NumberFormat
 import java.util.Locale
 
 class FragmentProductDetail : Fragment() {
 
+    private val viewModel : InventarioViewModel by viewModels()
     lateinit var binding : FragmentProductDetailBinding
     lateinit var nameArticulo : String
     var idArticulo : Long = 0
@@ -68,20 +71,7 @@ class FragmentProductDetail : Fragment() {
     fun editAndDelete(){
 
         binding.btnDelete.setOnClickListener{
-            val docRef = db.collection("articulo").document(idArticulo.toString())
-
-            // Elimina el documento de la colección
-            docRef.delete()
-                .addOnSuccessListener {
-                    // Eliminación exitosa
-                    Toast.makeText(requireContext(), "Artículo eliminado", Toast.LENGTH_SHORT).show()
-                    // Aquí puedes realizar otras acciones después de eliminar el artículo
-                }
-                .addOnFailureListener { e ->
-                    // Error al eliminar el documento
-                    Toast.makeText(requireContext(), "Error al eliminar: $e", Toast.LENGTH_SHORT).show()
-                }
-
+            viewModel.eliminarArticulo(idArticulo.toString(), requireContext())
             findNavController().navigate(R.id.action_fragmentProductDetail_to_fragmentInventario)
         }
 

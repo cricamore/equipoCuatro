@@ -8,19 +8,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.cristian.miniproyecto2.R
 import com.cristian.miniproyecto2.databinding.FragmentEditProductBinding
+import com.cristian.miniproyecto2.viewmodel.InventarioViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.NumberFormat
 import java.util.Locale
 
 class FragmentEditProduct : Fragment() {
     lateinit var binding : FragmentEditProductBinding
+    private val viewModel : InventarioViewModel by viewModels()
 
     lateinit var nameArticulo : String
     var idArticulo : Long = 0
-    var priceArticulo : Long = 0
+    var priceArticulo : Double = 0.0
     var quantityArticulo : Long = 0
     private val db = FirebaseFirestore.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +39,7 @@ class FragmentEditProduct : Fragment() {
         binding.lifecycleOwner = this
         idArticulo = arguments?.getLong("idArticulo") ?: 0
         nameArticulo = arguments?.getString("nameArticulo") ?: "No hay articulo"
-        priceArticulo = arguments?.getLong("priceArticulo") ?: 0
+        priceArticulo = arguments?.getDouble("priceArticulo") ?: 0.0
         quantityArticulo = arguments?.getLong("quantityArticulo") ?: 0
         return binding.root
     }
@@ -46,7 +49,7 @@ class FragmentEditProduct : Fragment() {
         val bundle = Bundle().apply {
             putLong("idArticulo", idArticulo)
             putString("nameArticulo", nameArticulo)
-            putLong("priceArticulo", priceArticulo)
+            putDouble("priceArticulo", priceArticulo)
             putLong("quantityArticulo", quantityArticulo)
         }
         binding.btnBack.setOnClickListener{
@@ -76,33 +79,13 @@ class FragmentEditProduct : Fragment() {
     }
 
     fun saveObject(){
-        val productoRef = db.collection("articulo").document(idArticulo.toString())
+        //val productoRef = db.collection("articulo").document(idArticulo.toString())
 
         val nombreArticulo = binding.nombreArticulo.text.toString()
-        val precioArticulo = binding.precioArticulo.text.toString().toLong()
+        val precioArticulo = binding.precioArticulo.text.toString().toDouble()
         val cantidadArticulo = binding.cantidadArticulo.text.toString().toLong()
 
-        if (nombreArticulo.isNotEmpty() && precioArticulo != null && cantidadArticulo != null) {
-            val nuevosDatos = hashMapOf(
-                "name" to nombreArticulo,
-                "price" to precioArticulo,
-                "quantity" to cantidadArticulo
-            )
-
-            productoRef
-                .update(nuevosDatos as Map<String, Any>)
-                .addOnSuccessListener {
-                    // Actualización exitosa
-                    Toast.makeText(requireContext(), "Artículo actualizado", Toast.LENGTH_SHORT).show()
-                }
-                .addOnFailureListener { e ->
-                    // Error al actualizar
-                    Toast.makeText(requireContext(), "Error al actualizar el documento", Toast.LENGTH_SHORT).show()
-                }
-        } else {
-            // Manejar el caso de campos vacíos o valores no numéricos
-            Toast.makeText(requireContext(), "Ingrese valores válidos", Toast.LENGTH_SHORT).show()
-        }
+        viewModel.editarArticulo(idArticulo.toString(), nombreArticulo, precioArticulo, cantidadArticulo, requireContext())
     }
 
     fun show() {
