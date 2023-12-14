@@ -5,7 +5,9 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.cristian.miniproyecto2.R
 import com.cristian.miniproyecto2.databinding.ActivityInventarioBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class InventarioActivity : AppCompatActivity() {
     private lateinit var binding: ActivityInventarioBinding
     override fun onCreate(savedInstanceState: Bundle?) {

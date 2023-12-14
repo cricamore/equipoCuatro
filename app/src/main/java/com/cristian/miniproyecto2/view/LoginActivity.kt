@@ -20,7 +20,9 @@ import com.cristian.miniproyecto2.R
 import com.cristian.miniproyecto2.databinding.ActivityLoginBinding
 import com.cristian.miniproyecto2.viewmodel.LoginViewModel
 import com.google.android.material.textfield.TextInputEditText
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var emailEditText: TextInputEditText
@@ -147,7 +149,7 @@ class LoginActivity : AppCompatActivity() {
             if (isLogin){
                 if(launchedFromWidget){
                     sharedPreferences.edit().putString("email", email).apply()
-                    finish()
+                    finishAffinity()
                 }else{
                     navInventory(email)
                 }

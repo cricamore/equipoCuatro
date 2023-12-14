@@ -1,8 +1,11 @@
 package com.cristian.miniproyecto2.repository
 
 import com.google.firebase.auth.FirebaseAuth
-class LoginRepository {
-    private val firebaseAuth = FirebaseAuth.getInstance()
+import javax.inject.Inject
+
+class LoginRepository @Inject constructor(
+    private val firebaseAuth : FirebaseAuth
+) {
 
     fun registerUser(email: String, pass:String, isRegisterComplete: (Boolean)->Unit){
         if(email.isNotEmpty() && pass.isNotEmpty()){
@@ -21,8 +24,7 @@ class LoginRepository {
 
     fun loginUser(email: String, pass: String, isLogin: (Boolean) -> Unit) {
         if (email.isNotEmpty() && pass.isNotEmpty()) {
-            FirebaseAuth.getInstance()
-                .signInWithEmailAndPassword(email, pass)
+            firebaseAuth.signInWithEmailAndPassword(email, pass)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
                         isLogin(true)

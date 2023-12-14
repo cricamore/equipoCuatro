@@ -16,7 +16,9 @@ import com.cristian.miniproyecto2.viewmodel.InventarioViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.NumberFormat
 import java.util.Locale
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FragmentEditProduct : Fragment() {
     lateinit var binding : FragmentEditProductBinding
     private val viewModel : InventarioViewModel by viewModels()

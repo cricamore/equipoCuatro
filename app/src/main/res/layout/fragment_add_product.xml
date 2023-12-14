@@ -27,7 +27,8 @@
                     android:id="@+id/backButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@android:drawable/ic_media_previous"
+                    android:src="@drawable/back"
+                    android:background="#424242"
                     app:tint="@android:color/white" />
 
                 <TextView
@@ -77,6 +78,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
+                    android:textColor="@android:color/white"
+                    android:maxLength="40"
                     android:maxEms="40" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -95,8 +98,9 @@
                     android:id="@+id/precioEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:digits="0123456789."
+                    android:inputType="number"
+                    android:textColor="@android:color/white"
+                    android:maxLength="20"
                     android:maxEms="20" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -115,6 +119,8 @@
                     android:id="@+id/cantidadEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:maxLength="4"
                     android:inputType="number"
                     android:maxEms="4" />
             </com.google.android.material.textfield.TextInputLayout>

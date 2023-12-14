@@ -48,6 +48,9 @@
         <action
             android:id="@+id/action_fragmentEditProduct_to_fragmentInventario"
             app:destination="@id/fragmentInventario" />
+    <action
+        android:id="@+id/action_fragmentAddProduct_to_inventario"
+        app:destination="@id/fragmentInventario" />
     </fragment>
 
 
