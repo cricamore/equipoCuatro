@@ -12,6 +12,7 @@ import com.cristian.miniproyecto2.R
 import com.cristian.miniproyecto2.databinding.FragmentProductDetailBinding
 import com.cristian.miniproyecto2.viewmodel.InventarioViewModel
 import com.google.firebase.firestore.FirebaseFirestore
+import java.math.BigDecimal
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -21,7 +22,7 @@ class FragmentProductDetail : Fragment() {
     lateinit var binding : FragmentProductDetailBinding
     lateinit var nameArticulo : String
     var idArticulo : Long = 0
-    var priceArticulo : Long = 0
+    var priceArticulo : Double = 0.0
     var quantityArticulo : Long = 0
     private val db = FirebaseFirestore.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +38,7 @@ class FragmentProductDetail : Fragment() {
         binding.lifecycleOwner = this
         idArticulo = arguments?.getLong("idArticulo") ?: 0
         nameArticulo = arguments?.getString("nameArticulo") ?: "No hay articulo"
-        priceArticulo = arguments?.getLong("priceArticulo") ?: 0
+        priceArticulo = arguments?.getDouble("priceArticulo") ?: 0.0
         quantityArticulo = arguments?.getLong("quantityArticulo") ?: 0
         return binding.root
     }
@@ -55,10 +56,11 @@ class FragmentProductDetail : Fragment() {
     fun show(){
         binding.productName.text = nameArticulo
         val priceTemplate = getString(R.string.price_template)
+        val decimalPrice = BigDecimal.valueOf(priceArticulo)
 
-        val pricePoints = NumberFormat.getNumberInstance(Locale("es", "ES")).format(priceArticulo)
+        val pricePoints = NumberFormat.getCurrencyInstance(Locale("es", "ES")).format(decimalPrice)
         val formattedPrice = String.format(priceTemplate, pricePoints)
-        binding.priceValue.text = formattedPrice
+        binding.priceValue.text = pricePoints
         binding.quantityValue.text = quantityArticulo.toString()
 
         val total = priceArticulo * quantityArticulo
@@ -79,7 +81,7 @@ class FragmentProductDetail : Fragment() {
             val bundle = Bundle().apply {
                 putLong("idArticulo", idArticulo)
                 putString("nameArticulo", nameArticulo)
-                putLong("priceArticulo", priceArticulo)
+                putDouble("priceArticulo", priceArticulo)
                 putLong("quantityArticulo", quantityArticulo)
             }
             findNavController().navigate(R.id.action_fragmentProductDetail_to_fragmentEditProduct, bundle)
