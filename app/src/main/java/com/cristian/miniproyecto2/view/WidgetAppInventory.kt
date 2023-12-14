@@ -41,6 +41,7 @@ class WidgetAppInventory : AppWidgetProvider() {
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
         val action = intent!!.action ?: ""
+        val firebaseAuth = FirebaseAuth.getInstance()
 
         if (context != null && action == "changeIcon") {
             val perfs = context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
@@ -50,7 +51,7 @@ class WidgetAppInventory : AppWidgetProvider() {
             Log.d("TAG","Email"+email)
             Log.d("TAG","entré")
 
-            if (email == null) {
+            if (firebaseAuth.currentUser == null) {
                 val intent = Intent(context, LoginActivity::class.java)
                 intent.putExtra("launchedFromWidget", true)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -72,8 +73,9 @@ class WidgetAppInventory : AppWidgetProvider() {
         } else if (context != null && action == "gestionarInventario") {
             sharedPreferences = context.getSharedPreferences("shared", Context.MODE_PRIVATE)
             val email = sharedPreferences.getString("email",null)
+            Log.d("TAG","mesali?"+email)
 
-            if (email == null) {
+            if (firebaseAuth.currentUser == null) {
                 val intent = Intent(context, LoginActivity::class.java)
 //                intent.putExtra("launchedFromWidget", true)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
