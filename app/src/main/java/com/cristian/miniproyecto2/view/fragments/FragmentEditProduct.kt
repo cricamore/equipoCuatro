@@ -17,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.text.NumberFormat
 import java.util.Locale
 import dagger.hilt.android.AndroidEntryPoint
+import java.math.BigDecimal
 
 @AndroidEntryPoint
 class FragmentEditProduct : Fragment() {
@@ -93,9 +94,7 @@ class FragmentEditProduct : Fragment() {
     fun show() {
         binding.tvIdProduct.text = "Id: " + idArticulo.toString()
         binding.nombreArticulo.setText(nameArticulo) // Asigna directamente el texto sin castings
-        val formattedPrice = NumberFormat.getNumberInstance(Locale("es", "ES")).format(priceArticulo)
-        binding.precioArticulo.setText(String.format("%s,00", formattedPrice))
-        //binding.precioArticulo.setText(priceArticulo.toString()) // Convierte a String y establece el texto
+        binding.precioArticulo.setText(BigDecimal.valueOf(priceArticulo).toString())
         binding.cantidadArticulo.setText(quantityArticulo.toString()) // Convierte a String y establece el texto
     }
 

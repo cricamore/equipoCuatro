@@ -58,17 +58,16 @@ class FragmentProductDetail : Fragment() {
     fun show(){
         binding.productName.text = nameArticulo
         val priceTemplate = getString(R.string.price_template)
-        val decimalPrice = BigDecimal.valueOf(priceArticulo)
 
-        val pricePoints = NumberFormat.getCurrencyInstance(Locale("es", "ES")).format(decimalPrice)
+        val decimalPrice = BigDecimal.valueOf(priceArticulo)
+        val pricePoints = NumberFormat.getCurrencyInstance(Locale("es", "US")).format(decimalPrice)
         val formattedPrice = String.format(priceTemplate, pricePoints)
         binding.priceValue.text = pricePoints
         binding.quantityValue.text = quantityArticulo.toString()
 
-        val total = priceArticulo * quantityArticulo
-        val totalPoints = NumberFormat.getNumberInstance(Locale("es", "ES")).format(total)
-        val formattedTotal = String.format(priceTemplate, totalPoints)
-        binding.totalValue.text = formattedTotal
+        val totalDecimal = BigDecimal.valueOf((priceArticulo * quantityArticulo))
+        val totalPoints = NumberFormat.getCurrencyInstance(Locale("es", "US")).format(totalDecimal)
+        binding.totalValue.text = totalPoints
 
     }
 
