@@ -18,8 +18,8 @@ import com.cristian.miniproyecto2.view.LoginActivity
 import com.cristian.miniproyecto2.view.RecyclerAdapter
 import com.cristian.miniproyecto2.viewmodel.InventarioViewModel
 import com.cristian.miniproyecto2.viewmodel.LoginViewModel
-import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.Thread.sleep
 
 @AndroidEntryPoint
 class inventario : Fragment() {
@@ -72,6 +72,7 @@ class inventario : Fragment() {
         recycler.layoutManager = LinearLayoutManager(context)
 
         inventarioViewModel.listarArticulos { listaArticulos ->
+            sleep(200L)
             val adapter = RecyclerAdapter(listaArticulos)
             binding.lista.visibility = View.VISIBLE
             binding.progress.visibility = View.INVISIBLE
