@@ -16,6 +16,7 @@ import java.math.BigDecimal
 import java.text.NumberFormat
 import java.util.Locale
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.DecimalFormat
 
 @AndroidEntryPoint
 class FragmentProductDetail : Fragment() {
@@ -57,16 +58,16 @@ class FragmentProductDetail : Fragment() {
 
     fun show(){
         binding.productName.text = nameArticulo
-        val priceTemplate = getString(R.string.price_template)
+        //val priceTemplate = getString(R.string.price_template)
 
         val decimalPrice = BigDecimal.valueOf(priceArticulo)
-        val pricePoints = NumberFormat.getCurrencyInstance(Locale("es", "US")).format(decimalPrice)
-        val formattedPrice = String.format(priceTemplate, pricePoints)
+        val pricePoints = NumberFormat.getCurrencyInstance(Locale("es", "CO")).format(decimalPrice)
+        //val formattedPrice = String.format(priceTemplate, pricePoints)
         binding.priceValue.text = pricePoints
         binding.quantityValue.text = quantityArticulo.toString()
 
         val totalDecimal = BigDecimal.valueOf((priceArticulo * quantityArticulo))
-        val totalPoints = NumberFormat.getCurrencyInstance(Locale("es", "US")).format(totalDecimal)
+        val totalPoints = NumberFormat.getCurrencyInstance(Locale("es", "CO")).format(totalDecimal)
         binding.totalValue.text = totalPoints
 
     }
